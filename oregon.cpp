@@ -14,7 +14,8 @@
                 cout << "\n\t|            Programmed By             |";
                 cout << "\n\t|          Joshua D. (ItsT3K)          |";
                 cout << "\n\t|                 and                  |";
-                cout << "\n\t|                                      |";          
+                cout << "\n\t|                Higg99                |"; 
+                cout << "\n\t========================================";
                 cout << "\n\t\tDo you need instructions?";
                 cout << "\n\t\t\tY or N?";
                 //y or n prompt
