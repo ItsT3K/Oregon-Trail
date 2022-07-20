@@ -71,10 +71,41 @@
                 cin.get();
                 cin.ignore(10000,'\n');
                 cin.clear();
-                /* Instructions Part 3 */
-                system("clear");                                  
+                system("clear");
+                cout << "\n\t=========================================";
+                cout << "\n\t|       Misc. Supplies - this includes  |";
+                cout << "\n\t| medicine and other things you will    |";
+                cout << "\n\t| need for sickness and emergency repair|";
+                cout << "\n\t|                                       |";
+                cout << "\n\t| You can spend all of your money before|";
+                cout << "\n\t| you start your trip. Or you can save  |";
+                cout << "\n\t| some of your cash to spend at forts   |";
+                cout << "\n\t| along the way when you run low.       |";
+                cout << "\n\t| However,items cost more at the forts  |";
+                cout << "\n\t| You can also go hunting along the way |";
+                cout << "\n\t| to get more food.                     |";
+                cout << "\n\t| Whenever you have to use your trusty  |";
+                cout << "\n\t| rifle along the way you will be told  |";
+                cout << "\n\t| to type in a word (that sounds like a |";
+                cout << "\n\t| gun shot. The faster you type in that |";
+                cout << "\n\t| word and hit the [ENTER] key the      |";
+                cout << "\n\t| better luck you will have with your   |";
+                cout << "\n\t| gun.                                  |";
+                cout << "\n\t=========================================";
+                cout << "\n\t\tPress [ENTER] To Continue";
+                cin.get();
+                cin.ignore(10000,'\n');
+                cin.clear();
+                /* Instructions Part 3 */                                  
                 }
                 /* No Instructions */
-                
+                system("clear");
+                int money = 900;
+                cout << "\n\t========================================";
+                cout << "\n\t|You have $900.                        |";
+                cout << "\n\t|How much do you want to spend on your |";
+                cout << "\n\t|oxen team?                            |";
+                cout << "\n\t========================================";                
+                /* Functions Go Here */
                 return 0;
         }
