@@ -6,6 +6,7 @@
 
     int purchase(char* item, int max, int min, int money){
     	printf(P_STRING, money, item);
+    	cin.get();
     }
 
     int main()
