@@ -1,7 +1,12 @@
-#include <iostream>
+
+#include "oregon.h"
 /* Attempt at a simple Oregon Trail Clone */
 /* Programmed by Josh D. < ItsT3K > */
     using namespace std;
+
+    int purchase(char* item, int max, int min, int money){
+    	printf(P_STRING, money, item);
+    }
 
     int main()
         {
@@ -22,7 +27,7 @@
                 char c;
                     do{
                         scanf(" %c",&c); c = toupper(c);
-                    }while(c != 'N' & c != 'Y');
+                    }while((c != 'N') & (c != 'Y'));
                     if (c=='Y'){
                 /* Instructions */
                 system("clear");
@@ -101,11 +106,17 @@
                 /* No Instructions */
                 system("clear");
                 int money = 900;
-                cout << "\n\t========================================";
+                /*cout << "\n\t========================================";
                 cout << "\n\t|You have $900.                        |";
                 cout << "\n\t|How much do you want to spend on your |";
                 cout << "\n\t|oxen team?                            |";
-                cout << "\n\t========================================";                
+                cout << "\n\t========================================";
+                */
+                purchase("oxen team", 100, 50, money);
                 /* Functions Go Here */
+
+                cin.get();
+				cin.ignore(10000,'\n');
+				cin.clear();
                 return 0;
         }
