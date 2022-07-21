@@ -4,21 +4,83 @@
 /* Programmed by Josh D. < ItsT3K > */
     using namespace std;
 
+	class Charicter{
+		public:
+			string name;
+			
+	};
+	class Player {
+		public:
+			int oxen;
+			int food;
+			int ammo;
+			int misc;
+			int miles;
+			int premiles;
+			int cloths;
+			int money;
+			int ill;
+			int inj;
+			int spass;
+			int d3;
+	};
+
+
     int purchase(char* item, int max, int min){
       int quantity;
       do{
         printf(P_STRING, item);
 	cin >> quantity;
 	if(!(quantity <= max & quantity >= min)){
-	printf("\n\tInvalid Amount\n");
+		if(min != 1){
+			printf("\n\tInvalid Amount\n");
+		}else{
+			printf("\n\tIMPOSSIBLE");
+		}
 	}
       }
       while(!(quantity <= max & quantity >= min));
       return quantity;
     }
+	
+	int beginTurn(Player p){
+		if(!(p.food >= 0)){
+			p.food = 0;
+		}
+		if(!(p.ammo >= 0)){
+			p.ammo = 0;
+		}
+		if(!(p.cloths >= 0)){
+			p.cloths = 0;
+		}
+		if(!(p.misc >= 0)){
+			p.misc = 0;
+		}
+		if(!(p.food >= 13)){
+			printf("\n\tYou's better do some hunting or muy food soon!!!!");
+		}
+		p.premiles = p.miles;
+		if( (p.ill == 1) || (p.inj == 1)){ 
+			p.money-=20;
+			if(p.money < 0){
+				return 5080;
+			}
+			p.ill = 0;
+			p.inj = p.ill;
+		}
+		if (p.spass != 1){
+			printf("\n\tTotal mileage: %i", p.miles);
+		}else{
+			printf("\n\tTotal mileage: 950");
+			p.spass = 0;
+		}
+		printf("\n\tFood: %i\n\tBullets: %i\n\tClothing: %i\n\tMisc. Supplies: %i\n\tCash: %i", p.food, p.ammo, p.cloths, p.misc, p.money);
+		return 0; //2060
+	}
 
     int main()
         {
+			Player plyr;
             string s;
                 system("clear");
                 cout << "\n\t========================================";
@@ -118,6 +180,7 @@
 		int oxen;
 		int food;
 		int ammo;
+		int cloths;
 		int misc;
                 /*cout << "\n\t========================================";
                 cout << "\n\t|You have $900.                        |";
@@ -133,13 +196,25 @@
 		  system("clear");
 		  ammo = purchase("ammunition", money, 1);
 		  system("clear");
+		  cloths = purchase("clothing", money, 1);
+		  system("clear");
 		  misc = purchase("miscellaneous", money, 1);
 		  system("clear");
-		  if(money < (oxen+food+ammo+misc)){
+		  if(money < (oxen+food+ammo+cloths+misc)){
 		    printf("\n\tYou Have Overspent your $%i... Buy again.\n",money);
 		    cin.get();}
-		}while(money < (oxen+food+ammo+misc));
-		 
+		}while(money < (oxen+food+ammo+cloths+misc));
+		plyr.money = money;
+		plyr.oxen = oxen;
+		plyr.food = food;
+		plyr.ammo = ammo;
+		plyr.misc = misc;
+		plyr.cloths = cloths;
+		plyr.money = money - (oxen+food+ammo+cloths+misc);
+		plyr.miles = 0;
+		printf("\n\tAfter all purchases. You now have $%i left\n\n\t MONDAY MARCH 29 1847", plyr.money);
+		beginTurn(plyr);
+		
 		  
 		/* Functions Go Here */
 		
