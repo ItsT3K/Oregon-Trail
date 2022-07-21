@@ -11,7 +11,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
-#define P_STRING "\n\t========================================\n\t|You have $%i.\n\t|How much do you want to spend on your |\n\t|%s?\n\t========================================"
+#define P_STRING "\n\t========================================\n\t|How much do you want to spend on your |\n\t|%s?\n\t========================================"
 
 
 
