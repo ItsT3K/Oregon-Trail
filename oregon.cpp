@@ -4,8 +4,17 @@
 /* Programmed by Josh D. < ItsT3K > */
     using namespace std;
 
-    int purchase(char* item, int max, int min, int money){
-    	printf(P_STRING, money, item);
+    int purchase(char* item, int max, int min){
+      int quantity;
+      do{
+        printf(P_STRING, item);
+	cin >> quantity;
+	if(!(quantity <= max & quantity >= min)){
+	printf("\n\tInvalid Amount\n");
+	}
+      }
+      while(!(quantity <= max & quantity >= min));
+      return quantity;
     }
 
     int main()
@@ -106,17 +115,39 @@
                 /* No Instructions */
                 system("clear");
                 int money = 900;
+		int oxen;
+		int food;
+		int ammo;
+		int misc;
                 /*cout << "\n\t========================================";
                 cout << "\n\t|You have $900.                        |";
                 cout << "\n\t|How much do you want to spend on your |";
                 cout << "\n\t|oxen team?                            |";
                 cout << "\n\t========================================";
                 */
-                purchase("oxen team", 100, 50, money);
-                /* Functions Go Here */
+		do{
+		  printf("\n\tYou have $%i",money);
+		  oxen = purchase("oxen team", 300, 200);
+		  system("clear");
+		  food = purchase("food", money, 1);
+		  system("clear");
+		  ammo = purchase("ammunition", money, 1);
+		  system("clear");
+		  misc = purchase("miscellaneous", money, 1);
+		  system("clear");
+		  if(money < (oxen+food+ammo+misc)){
+		    printf("\n\tYou Have Overspent your $%i... Buy again.\n",money);
+		    cin.get();}
+		}while(money < (oxen+food+ammo+misc));
+		 
+		  
+		/* Functions Go Here */
+		
 
                 cin.get();
 				cin.ignore(10000,'\n');
 				cin.clear();
-                return 0;
+
+
+		    	return 0;
         }
