@@ -9,78 +9,49 @@
 			string name;
 			
 	};
-	class Player {
-		public:
-			int oxen;
-			int food;
-			int ammo;
-			int misc;
-			int miles;
-			int premiles;
-			int cloths;
-			int money;
-			int ill;
-			int inj;
-			int spass;
-			int d3;
-	};
 
-
-    int purchase(char* item, int max, int min){
-      int quantity;
-      do{
-        printf(P_STRING, item);
-	cin >> quantity;
-	if(!(quantity <= max & quantity >= min)){
-		if(min != 1){
-			printf("\n\tInvalid Amount\n");
-		}else{
-			printf("\n\tIMPOSSIBLE");
-		}
-	}
-      }
-      while(!(quantity <= max & quantity >= min));
-      return quantity;
-    }
+	int oxen; //A
+	int ammo; //B
+	int bangIT; //B1
+	int bangST; //B3
+	int cloths; //C
+	int cold; //C1
+	string response; //CS
+	int eventcnt; //D1
+	int tDate = 0; //D3
+	int date; //D4
+	int shoot = 0; //D9
+	int eat; //E
+	int food; //F
+	int spassClear; //F1
+	int blueMntClear; //F2
+	int fturn; //F9
+	int inj; //K8
+	int blizz; //L1
+	int miles; //M
+	int misc; //M1
+	int premiles; //M2
+	int spass; //M9	
+	int fortMoney; //P
+	int rng; //R1
+	int ill; //S4
+	int riderHost; //S5
+	int shootWord; //S6
+	string shootWordVal[4] = {"BANG", "BLAM", "POW", "WHAM"}; //SS
+	int money; //T
+	int attackOpt; //T1
+	int act; //X
+	int fortOpt; //X1
 	
-	int beginTurn(Player p){
-		if(!(p.food >= 0)){
-			p.food = 0;
-		}
-		if(!(p.ammo >= 0)){
-			p.ammo = 0;
-		}
-		if(!(p.cloths >= 0)){
-			p.cloths = 0;
-		}
-		if(!(p.misc >= 0)){
-			p.misc = 0;
-		}
-		if(!(p.food >= 13)){
-			printf("\n\tYou's better do some hunting or muy food soon!!!!");
-		}
-		p.premiles = p.miles;
-		if( (p.ill == 1) || (p.inj == 1)){ 
-			p.money-=20;
-			if(p.money < 0){
-				return 5080;
-			}
-			p.ill = 0;
-			p.inj = p.ill;
-		}
-		if (p.spass != 1){
-			printf("\n\tTotal mileage: %i", p.miles);
-		}else{
-			printf("\n\tTotal mileage: 950");
-			p.spass = 0;
-		}
-		printf("\n\tFood: %i\n\tBullets: %i\n\tClothing: %i\n\tMisc. Supplies: %i\n\tCash: %i", p.food, p.ammo, p.cloths, p.misc, p.money);
-		return 0; //2060
-	}
+	const char* dates[19] = {"April 12","April 16","May 10","May 24","June 7","June 21","July 5","July 19","August 2","August 16","August 31","September 13","September 27"," October 11","October 25","November 8","November 22","December 6","December 20"};
+
+
+
+	
+
 
     int main()
         {
-			Player plyr;
             string s;
                 system("clear");
                 cout << "\n\t========================================";
@@ -176,12 +147,7 @@
                 }
                 /* No Instructions */
                 system("clear");
-                int money = 900;
-		int oxen;
-		int food;
-		int ammo;
-		int cloths;
-		int misc;
+                money = 900;
                 /*cout << "\n\t========================================";
                 cout << "\n\t|You have $900.                        |";
                 cout << "\n\t|How much do you want to spend on your |";
@@ -204,16 +170,25 @@
 		    printf("\n\tYou Have Overspent your $%i... Buy again.\n",money);
 		    cin.get();}
 		}while(money < (oxen+food+ammo+cloths+misc));
-		plyr.money = money;
-		plyr.oxen = oxen;
-		plyr.food = food;
-		plyr.ammo = ammo;
-		plyr.misc = misc;
-		plyr.cloths = cloths;
-		plyr.money = money - (oxen+food+ammo+cloths+misc);
-		plyr.miles = 0;
-		printf("\n\tAfter all purchases. You now have $%i left\n\n\t MONDAY MARCH 29 1847", plyr.money);
-		beginTurn(plyr);
+		money = money - (oxen+food+ammo+cloths+misc);
+		miles = 0;
+		printf("\n\tAfter all purchases. You now have $%i left\n\n\t MONDAY MARCH 29 1847", money);
+		do{
+		beginTurn(); //1220 -> goto 1750
+		turnOptions();
+		if(act == 1){
+			fortStop();//goto 2290
+		}else if(act==2){
+			hunting();// goto 2540
+			if (food < 13){
+				dying(5060);
+			}
+		}
+		eating(); //goto 2720
+		ridersAttack();
+		selectEvents();
+		setDate();
+		}while(true);
 		
 		  
 		/* Functions Go Here */
@@ -226,3 +201,213 @@
 
 		    	return 0;
         }
+		
+		
+	int purchase(char* item, int max, int min){
+      int quantity;
+      do{
+        printf(P_STRING, item);
+	cin >> quantity;
+	if(!(quantity <= max & quantity >= min)){
+		if(min != 1){
+			printf("\n\tInvalid Amount\n");
+		}else{
+			printf("\n\tIMPOSSIBLE");
+		}
+	}
+      }
+      while(!(quantity <= max & quantity >= min));
+      return quantity;
+    }
+	
+	int setDate(){ //1230
+		if (miles >= 2040){
+			finalTurn();
+		}
+		tDate++;
+		if(tDate == 20){
+			dying(5170);
+		}
+		printf("\n\t%s 1847\n", dates[tDate-1]);
+		return 0;
+	}
+	
+	
+	int beginTurn(){ //1750
+		if(!(food >= 0)){ //1750
+			food = 0;
+		}
+		if(!(ammo >= 0)){ //1770
+			ammo = 0;
+		}
+		if(!(cloths >= 0)){ //1790
+			cloths = 0;
+		}
+		if(!(misc >= 0)){ //1810
+			misc = 0;
+		}
+		if(!(food >= 13)){ //1830
+			printf("\n\tYou's better do some hunting or muy food soon!!!!");
+		}
+		premiles = miles;
+		if( (ill == 1) || (inj == 1)){ //1920/1930
+			money-=20;
+			if(money < 0){
+				dying(5080);
+			}
+			ill = 0;
+			inj = ill;
+		}
+		if (spass != 1){ //1990
+			printf("\n\tTotal mileage: %i", miles);
+		}else{
+			printf("\n\tTotal mileage: 950");
+			spass = 0;
+		}
+		printf("\n\tFood: %i\n\tBullets: %i\n\tClothing: %i\n\tMisc. Supplies: %i\n\tCash: %i", food, ammo, cloths, misc, money);
+		return 0; //2060
+	}
+	
+	int turnOptions(){ //2060 - 2270
+		if (fortOpt !=-1){ //2060
+			fortOpt = fortOpt * (-1);
+			do{
+				printf("\n\tDo you want to (1) Stop at the next fort, (2) Hunt, \n or (3) Continue\n");
+				cin >> act;
+				if ( (act < 1) || (act > 3)){
+					printf("\n\tinvalid input");
+				}else if((act == 2) & ( ammo > 39)){
+					printf("\n\tThough you need more bullets to go hunting");
+				}
+			}while( (act < 1) || (act > 3) || ((act == 2) & ( ammo > 39)));
+		}else{//2170
+			do{
+				printf("\n\tDo you want to (1) Stop at the next fort, (2) Hunt, \n or (3) Continue\n");
+				cin >> act;
+				if ( (act < 1) || (act > 3)){
+					printf("\n\tinvalid input");
+				}else if((act == 1) & ( ammo > 39)){
+					printf("\n\tThough you need more bullets to go hunting");
+				}
+			}while( (act < 1) || (act > 2) || ((act == 1) & ( ammo > 39)));
+			act = act + 1;
+		}
+	}
+	
+	
+	int fortStop(){ //2280 - 2520
+		
+	}
+	
+	int hunting(){ //2530 - 2730
+		miles =  miles - 45;
+		// shooting func
+		if (bangIT <= 1){
+			
+		}else if( (100*rand() % 101) < (13*bangIT)){
+			
+		}else {
+		
+		}
+		if( food >= 13){
+			return 0;
+		}
+		dying(5060);
+	}
+	
+	int eating(){ //2740 - 2870
+		
+	}
+	
+	int ridersAttack(){ // 2880 - 3530
+		
+	}
+	
+	int selectEvents(){ // 3540 - 4690
+		
+	}
+	
+	int mountains(){ // 4700 -  5040
+		
+	}
+	
+	int dying(int opt){ // 5050 - 5450
+		if( opt == 5060){
+			printf("You ran out of food and starved to death");
+		}else if((opt == 5080) || (opt == 5110)){
+			if(opt == 5080){
+				money = 0;
+				printf("\n\tYou can't afford a doctor");
+			}else{
+				printf("\n\tYou ran out of medical supplies");
+			}
+			printf("\n\tYou died of");
+			if (inj = 1){
+				printf("injuries");
+			}else{
+				printf("pneumonia");
+			}
+		}
+		printf("\n\tDue to your unfortunate situation, there are a few\n formalities we must go through\n");
+		printf("\n\tWould you like a minister?\n");
+		cin >> response;
+		printf("\n\tWould you like a fancy funeral?\n");
+		cin >> response;
+		printf("\n\twould you like us to inform your next of kin?\n");
+		cin >> response;
+		if (response == "YES"){
+			printf("\n\tThat will be $4.50 for the telegraph charge.\n");
+		}else{
+			printf("\n\tBut your aunt sadie in ST. Louis is really worried about you.\n");
+		}
+		printf("\n\tWe thank you for this information and we are sorry you\n\tdidn't make it back to the great terrirtory of Oregon\n\tbetter luck next time\n");
+		printf("\n\n\t\t\t\t\t\t\tSincerly\n\n\t\t\t\t\tThe Oregon City Chamber of Commerce");
+		cin.get();
+		exit(0);
+	}
+	
+	int finalTurn(){ // 5420 - 6120
+		
+	}
+	
+	int shooting(){ // 6130 - 6280
+		time_t start, stop;
+		shootWord = rand()%4;
+		printf("Type: %s", shootWordVal[shootWord]);
+		time(&start);
+		cin >> response;
+		time(&stop);
+		bangIT = difftime(stop, start) - (shoot - 1);
+		if (!(bangIT > 0)){
+			bangIT = 0;
+		}
+		if ( response == shootWordVal[shootWord]){
+			bangIT = 9;
+		}
+		return 0;
+	}
+	
+	int illness(){ // 6290 - 6460
+		if ((100*rand() % 101) < (10+35*(eat-1))){
+			printf("Mild illness---Medicine used");
+			miles = miles - 5;
+			misc = misc - 2;
+		}else if ((100*rand() % 101) < (100-(40/4^(eat-1)))){
+			printf("Bad illness---Medicine used");
+			miles = miles - 5;
+			misc = misc - 5;
+		}else{
+			printf("Serious Illness\nYou must stop for medical attension");
+			misc =  misc - 10;
+			ill =1;
+		}
+		if(misc < 0){
+			dying(5110);
+		}else if(blizz == 1){
+			if( miles <= 950){
+				spass = 1;
+			}
+			return 0;
+		}
+		return 0; // return to mountains
+	}
