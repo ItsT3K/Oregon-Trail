@@ -206,7 +206,7 @@
 	int purchase(string item, int max, int min){
       int quantity;
       do{
-        printf(P_STRING, item);
+        printf(P_STRING, item.c_str());
 	cin >> quantity;
 	if(!(quantity <= max & quantity >= min)){
 		if(min != 1){
