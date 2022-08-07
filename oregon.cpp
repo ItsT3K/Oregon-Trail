@@ -28,9 +28,9 @@
 	int fturn; //F9
 	int inj; //K8
 	int blizz; //L1
-	int miles; //M
+	double miles; //M
 	int misc; //M1
-	int premiles; //M2
+	double premiles; //M2
 	int spass; //M9	
 	int fortMoney; //P
 	int rng; //R1
@@ -259,7 +259,7 @@
 			inj = ill;
 		}
 		if (spass != 1){ //1990
-			printf("\n\tTotal mileage: %i", miles);
+			printf("\n\tTotal mileage: %f", miles);
 		}else{
 			printf("\n\tTotal mileage: 950");
 			spass = 0;
@@ -316,11 +316,98 @@
 	}
 	
 	int eating(){ //2740 - 2870
-		
+		do{
+			printf("\n\tDo you want to eat (1) poorly (2) moderately\nor (3) well\n");
+			cin >> eat;
+			if ((eat > 3) || (eat < 1)){
+				printf("\tInvalid input!\n");
+			} else if((food - 8 - 5 * eat) < 0){
+				printf("\tyou can't eat that well\n");
+			}
+		}while((eat > 3) || (eat < 1) || ((food - 8 - 5 * eat) < 0));
+		food = food - 8 - 5 * eat;
+		miles = (double)miles+200+((double)oxen-220)/5+ 10 * ((double)rand()/RAND_MAX);
+		blizz = 0;
+		cold = 0;
 	}
 	
 	int ridersAttack(){ // 2880 - 3530
-		
+		if ((double) rand() / RAND_MAX * 10 <= ((pow((miles/100-4),2) +72)/(pow((miles/100-4),2) +12)-1)){
+			printf("\n\tRisers ahead.\tThey ");
+			riderHost=0;
+			if (((double) rand()/ RAND_MAX)<= .8){
+				printf("don't ");
+				riderHost=1;
+			}
+			printf("look hostile.\n\t Tactics");
+			do{
+				printf("(1) Run (2) attack (3) continue (4) circle wagons: ");
+				if(((double) rand()/ RAND_MAX)<= .2){
+					riderHost = 1- riderHost;
+				}
+				cin >> attackOpt;
+				if((attackOpt < 1) || (attackOpt > 4)){
+					printf("\n\t invalid input\n\t");
+				}
+			}while((attackOpt < 1) || (attackOpt > 4));
+			
+			if(riderHost != 1){
+				if( attackOpt == 1){
+					miles+=20;
+					misc = misc - 15;
+					ammo = ammo - 120;
+					oxen = oxen - 20;
+				}else if( attackOpt == 2){
+					shooting();
+					ammo = ammo-bangIT*40-80;
+					if (bangIT <= 1){
+						printf("\n\tNice shooting---you drove them off");
+					}else if(bangIT > 4){
+						printf("\n\tLousy shot---you got knifed");
+						inj = 1;
+						printf("\n\tYou have to see a doctor");
+						
+					}else{
+						printf("\n\tKinda slow with your colt .45");
+					}
+				}else if( attackOpt == 3){
+					if (((double) rand()/ RAND_MAX)<= .8){
+						ammo = ammo - 150;
+						misc = misc - 15;
+					}
+				}else{
+					shooting();
+					ammo = ammo-bangIT*30-80;
+					miles= miles - 25;
+					if (bangIT <= 1){
+						printf("\n\tNice shooting---you drove them off");
+					}else if(bangIT > 4){
+						printf("\n\tLousy shot---you got knifed");
+						inj = 1;
+						printf("\n\tYou have to see a doctor");
+						
+					}else{
+						printf("\n\tKinda slow with your colt .45");
+					}
+				}
+			}else{
+				if( attackOpt == 1){
+				}else if( attackOpt == 2){
+				}else if( attackOpt == 3){
+				}else{
+					miles = miles - 20;
+				}
+			}
+			if(riderHost != 0){
+				printf("\n\tRiders were friendly, but check for possible losses");
+			}else{
+				printf("\n\tRiders were hostile--Check for losses");
+				if (ammo < 0){
+					printf("\n\tYou ran out of bullets and got massacred by the riders");
+					dying(5170);
+				}
+			}
+		}
 	}
 	
 	int selectEvents(){ // 3540 - 4690
