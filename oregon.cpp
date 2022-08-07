@@ -342,7 +342,7 @@
 				printf("\n\tYou ran out of medical supplies");
 			}
 			printf("\n\tYou died of");
-			if (inj = 1){
+			if (inj == 1){
 				printf("injuries");
 			}else{
 				printf("pneumonia");
