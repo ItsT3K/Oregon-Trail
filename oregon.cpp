@@ -203,7 +203,7 @@
         }
 		
 		
-	int purchase(char* item, int max, int min){
+	int purchase(string item, int max, int min){
       int quantity;
       do{
         printf(P_STRING, item);
@@ -373,7 +373,7 @@
 	int shooting(){ // 6130 - 6280
 		time_t start, stop;
 		shootWord = rand()%4;
-		printf("Type: %s", shootWordVal[shootWord]);
+		printf("Type: %s", shootWordVal[shootWord].c_str());
 		time(&start);
 		cin >> response;
 		time(&stop);

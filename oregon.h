@@ -14,7 +14,7 @@
 #include <ctime>
 #define P_STRING "\n\t========================================\n\t|How much do you want to spend on your |\n\t|%s?\n\t========================================"
 
-	int purchase(char* item, int max, int min);
+	int purchase(std::__cxx11::string item, int max, int min);
 	int setDate();
 	int beginTurn();
 	int turnOptions();
