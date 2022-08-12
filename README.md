@@ -5,3 +5,4 @@ I liked The Oregon Trail when I was a kid *(albeit it was the Windows 9x MECC ve
 # Building it
 Building it currently is easy. Right now there is no Makefile so all you need to do is run
 `$ g++ oregon.cpp -o oregon`
+Another option is to execute `install.sh` by running `sh install.sh` or `./install.sh`. It will also give you a option on if you want to install Oregon Trail to `/usr/local/bin` or if you want to run it from the source folder.
