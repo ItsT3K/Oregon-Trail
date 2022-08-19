@@ -41,8 +41,9 @@
 	int money; //T
 	int attackOpt; //T1
 	int act; //X
-	int fortOpt; //X1
-	
+	bool fortOpt; //X1
+	bool initp;
+	string weekdays[7] = {"Monday", "Tuesday", "Wednesday", "Thurday", "Friday", "Saturday", "Sunday"};
 	const char* dates[19] = {"April 12","April 16","May 10","May 24","June 7","June 21","July 5","July 19","August 2","August 16","August 31","September 13","September 27"," October 11","October 25","November 8","November 22","December 6","December 20"};
 
 
@@ -154,6 +155,7 @@
                 cout << "\n\t|oxen team?                            |";
                 cout << "\n\t========================================";
                 */
+		initp = true;
 		do{
 		  printf("\n\tYou have $%i",money);
 		  oxen = purchase("oxen team", 300, 200);
@@ -172,6 +174,7 @@
 		}while(money < (oxen+food+ammo+cloths+misc));
 		money = money - (oxen+food+ammo+cloths+misc);
 		miles = 0;
+		initp = false;
 		printf("\n\tAfter all purchases. You now have $%i left\n\n\t MONDAY MARCH 29 1847", money);
 		do{
 		beginTurn(); //1220 -> goto 1750
@@ -180,9 +183,9 @@
 			fortStop();//goto 2290
 		}else if(act==2){
 			hunting();// goto 2540
-			if (food < 13){
-				dying(5060);
-			}
+		}
+		if (food < 13){
+			dying(5060);
 		}
 		eating(); //goto 2720
 		ridersAttack();
@@ -210,7 +213,12 @@
 	cin >> quantity;
 	if(!(quantity <= max & quantity >= min)){
 		if(min != 1){
-			printf("\n\tInvalid Amount\n");
+			if (initp == true){
+				printf("\n\tInvalid Amount\n");
+			}else{
+				printf("\n\tYou dont't have that much--keep your spending down\n\tYou Miss your chance to spend of that item!");
+				return 0;
+			}
 		}else{
 			printf("\n\tIMPOSSIBLE");
 		}
@@ -269,8 +277,8 @@
 	}
 	
 	int turnOptions(){ //2060 - 2270
-		if (fortOpt !=-1){ //2060
-			fortOpt = fortOpt * (-1);
+		if (fortOpt){ //2060
+			fortOpt = not fortOpt;
 			do{
 				printf("\n\tDo you want to (1) Stop at the next fort, (2) Hunt, \n or (3) Continue\n");
 				cin >> act;
@@ -282,21 +290,35 @@
 			}while( (act < 1) || (act > 3) || ((act == 2) & ( ammo > 39)));
 		}else{//2170
 			do{
-				printf("\n\tDo you want to (1) Stop at the next fort, (2) Hunt, \n or (3) Continue\n");
+				printf("\n\tDo you want to (1) Hunt, \n or (2) Continue\n");
 				cin >> act;
-				if ( (act < 1) || (act > 3)){
+				if ( (act < 1) || (act > 2)){
 					printf("\n\tinvalid input");
 				}else if((act == 1) & ( ammo > 39)){
 					printf("\n\tThough you need more bullets to go hunting");
 				}
 			}while( (act < 1) || (act > 2) || ((act == 1) & ( ammo > 39)));
 			act = act + 1;
+			fortOpt = not fortOpt;
 		}
 	}
 	
 	
 	int fortStop(){ //2280 - 2520
-		
+		fortMoney = purchase("food", money, 0);
+		money = money - fortMoney;
+		food = food + (2*fortMoney)/3;
+		fortMoney = purchase("amunition", money, 0);
+		money = money - fortMoney;
+		ammo = ammo + 50 * (2*fortMoney)/3;
+		fortMoney = purchase("Clothing", money, 0);
+		money = money - fortMoney;
+		cloths = cloths + (2*fortMoney)/3;
+		fortMoney = purchase("Miscellaneous Supplies", money, 0);
+		money = money - fortMoney;
+		misc = misc + (2*fortMoney)/3;
+		miles = miles - 45;
+		return 0;
 	}
 	
 	int hunting(){ //2530 - 2730
@@ -454,7 +476,36 @@
 	}
 	
 	int finalTurn(){ // 5420 - 6120
-		
+		fturn = (2040-premiles) / (miles/premiles);
+		food = food + (1 - fturn) * (8 * 5 * eat);
+		printf("\n\n\tYou Finally Arrived at Oregon City\n\t After 2040 Long Miles \"Horray !!!!!\" \n\t A real pioneer!\n\n");
+		fturn = fturn * 14;
+		tDate = tDate * 14 + fturn;
+		fturn = fturn + 1;
+		fturn = fturn % 7;
+		printf("%s", weekdays[fturn]);
+		if(tDate <= 124){
+			tDate = tDate - 93;
+			printf(" July %i 1847", tDate);
+		}else if( tDate <= 155){
+			tDate = tDate - 124;
+			printf(" August %i 1847", tDate);
+		}else if( tDate <= 185){
+			tDate = tDate - 155;
+			printf(" September %i 1847", tDate);
+		}else if( tDate <= 216){
+			tDate = tDate - 185;
+			printf(" October %i 1847", tDate);
+		}else if( tDate <= 246){
+			tDate = tDate - 216;
+			printf(" November %i 1847", tDate);
+		}else{
+			tDate = tDate - 246;
+			printf(" December %i 1847", tDate);
+		}
+		printf("\n\n\tFood: %i\n\tBullets: %i\n\tClothing: %i\n\tMisc. Supp.: %i\n\tCash: %i", food, ammo, cloths, misc, money);
+		printf("\n\n\tPresident James K. Polk sends you his\n\theartiest congratulations\n\tand wishes you a prosperous life ahead\n\tat your new home");
+		exit(0);
 	}
 	
 	int shooting(){ // 6130 - 6280
