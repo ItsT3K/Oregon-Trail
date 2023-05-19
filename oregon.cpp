@@ -1,4 +1,5 @@
 
+
 #include "oregon.h"
 /* Attempt at a simple Oregon Trail Clone */
 /* Programmed by Josh D. < ItsT3K > */
@@ -190,6 +191,7 @@
 		eating(); //goto 2720
 		ridersAttack();
 		selectEvents();
+		mountains();
 		setDate();
 		}while(true);
 		
@@ -305,6 +307,9 @@
 	
 	
 	int fortStop(){ //2280 - 2520
+<<<<<<< HEAD
+	 	
+=======
 		fortMoney = purchase("food", money, 0);
 		money = money - fortMoney;
 		food = food + (2*fortMoney)/3;
@@ -319,6 +324,7 @@
 		misc = misc + (2*fortMoney)/3;
 		miles = miles - 45;
 		return 0;
+>>>>>>> refs/remotes/origin/main
 	}
 	
 	int hunting(){ //2530 - 2730
@@ -433,7 +439,116 @@
 	}
 	
 	int selectEvents(){ // 3540 - 4690
-		
+	  eventcnt = 0;
+	  rng = rand() % 101; // Generate Num <100
+	  eventcnt = eventcnt + 1;
+	  if(rng <= 6){ // Basic Line 3660
+	    printf("\nWagon breaks down! Lose time and supplies fixing it");
+	    miles = miles - 15.0 - 5.0 * ((double)rand() / RAND_MAX); 
+	    misc = misc - 8;        
+	  }
+	  else if(rng <= 11){ // Basic Line 3700
+	    printf("\nOx injures leg! Slows you down rest of trip.");
+	    miles = miles - 25;
+	    oxen = oxen - 20;
+	  }
+	  else if(rng <= 13){ // Basic Line 3740
+	    printf("\nBad luck! Your daughter broke her arm\nYou had to stop and use supplies to make a sling");
+	    miles = miles - 5.0 - 4.0 *((double)rand() / RAND_MAX);
+	    misc = misc - 2.0 - 3.0 * ((double)rand() / RAND_MAX);
+	  }
+	  else if(rng <= 15){ // Basic Line 3790
+	    printf("\nOx wanders off! Spend time looking for it");
+	    miles = miles - 17;
+	  }
+	  else if(rng <= 17){ // Basic Line 3820
+	    printf("\nYour son gets lost! Spend half the day looking for him");
+	    miles = miles - 10;
+	  }
+	  else if(rng <= 22){ // Basic Line 3850
+	    printf("\nUnsafe water! Lose time looking for clean spring");
+	    miles = miles - 10.0 * ((double)rand() / RAND_MAX) - 2.0;
+	  }
+	  else if(rng <= 32){ // Basic Line 3880
+	    /* do this later nerd */
+	  }
+	  else if(rng <= 35){ // Basic Line 3960
+	    printf("\nBandits Attack!");
+	    shooting();
+	    ammo = ammo - 20 * bangIT;
+	    if( ammo < 0 ){
+	      printf("\nYou ran out of bullets! They get lots of cash");
+	      money = money / 3;
+	    }
+	    else if( bangIT <= 1 ){
+	      printf("\nQuickest draw outside of Dodge City!!!\n\tYou got 'em!");
+	      return;
+	    }
+	    printf("\nYou got shot in the leg and they took one of your oxen!");
+	    inj = 1;
+	    printf("\nYou better have a doc look at your wound");
+	    misc = misc - 5;
+	    oxen = oxen - 20;
+	  }
+	  else if(rng <= 37){ // Basic Line 4130
+	    printf("\nThere was a fire in your wagon! Food and supplies damaged");
+	    food = food - 40;
+	    ammo = ammo - 400;
+	    misc = misc - ((double)rand() / RAND_MAX) * 8.0 - 3.0;
+	    miles = miles - 15;
+	  }
+	  else if(rng <= 42){ // Basic Line 4190
+	    printf("\nLose your way in heavy fog! Time is lost.");
+	    miles = miles - 10.0 - 5.0 * ((double)rand() / RAND_MAX);
+	  }
+	  else if(rng <= 44){ // Basic Line 4220
+	    printf("\nYou killed a poisonous snake after it bit you!");
+	    ammo = ammo - 10;
+	    misc = misc - 5;
+	    if(misc <= 0){
+	      printf("\nYou die of snakebite since you have no medicine");
+	      dying(5170);
+	    }
+	  }
+	  else if(rng <= 54){ // Basic Line 4290
+	    printf("\nWagon gets swamped fording river! Lose food and clothes");
+	    food = food - 30;
+	    cloths = cloths - 20;
+	    miles = miles - 20.0 - 20.0 * ((double)rand() / RAND_MAX);
+	  }
+	  else if(rng <= 64){ // Basic Line 4340
+	    printf("\nWild animals attack!");
+	    shooting();
+	    if(ammo =< 39){
+	      printf("\nYou were too low on bullets. The wolves overpowered you");
+	      inj = 1;
+	      dying(5120);
+	    }
+	    else if(bangIT =< 2){
+	      printf("\nNice shootin' pardner! They didn't get much");
+	    }
+	    else{
+	      printf("\nSlow on the draw. They got at your food and clothes");
+	      cloths = cloths - bangIT * 4;
+	      food = food - bangIT * 8;
+	    }
+	    ammo = ammo - 20 * bangIT;  
+	  }
+	  else if(rng <= 69){ // Basic Line 4560
+	    printf("\nHail storm! Supplies damaged!");
+	    miles = miles - 5.0 - ((double)rand() / RAND_MAX);
+	    ammo = ammo - 200;
+	    misc = misc - 4.0 - ((double)rand() / RAND_MAX) * 3;
+	  }
+	  else if(rng <= 95){ // Basic Line 4610
+	    if(eat == 1){
+	  }
+	  while(eventcnt == 16){
+	    printf("Helpful Indians Show you where to find more food\n");
+	    food = food + 14;
+	  }
+	  return;
+	    
 	}
 	
 	int mountains(){ // 4700 -  5040
