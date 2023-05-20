@@ -13,7 +13,7 @@
 #include <string>
 #include <ctime>
 #include <cmath>
-#define P_STRING "\n\t========================================\n\t|How much do you want to spend on your |\n\t|%s?\n\t========================================"
+#define P_STRING "\n\t========================================\n\t|How much do you want to spend on your |\n\t|%s?\n\t========================================\n"
 
 	int purchase(std::string item, int max, int min);
 	int setDate();

@@ -307,9 +307,6 @@
 	
 	
 	int fortStop(){ //2280 - 2520
-<<<<<<< HEAD
-	 	
-=======
 		fortMoney = purchase("food", money, 0);
 		money = money - fortMoney;
 		food = food + (2*fortMoney)/3;
@@ -324,7 +321,6 @@
 		misc = misc + (2*fortMoney)/3;
 		miles = miles - 45;
 		return 0;
->>>>>>> refs/remotes/origin/main
 	}
 	
 	int hunting(){ //2530 - 2730
@@ -482,7 +478,7 @@
 	    }
 	    else if( bangIT <= 1 ){
 	      printf("\nQuickest draw outside of Dodge City!!!\n\tYou got 'em!");
-	      return;
+	      return 0;
 	    }
 	    printf("\nYou got shot in the leg and they took one of your oxen!");
 	    inj = 1;
@@ -519,12 +515,12 @@
 	  else if(rng <= 64){ // Basic Line 4340
 	    printf("\nWild animals attack!");
 	    shooting();
-	    if(ammo =< 39){
+	    if(ammo <= 39){
 	      printf("\nYou were too low on bullets. The wolves overpowered you");
 	      inj = 1;
 	      dying(5120);
 	    }
-	    else if(bangIT =< 2){
+	    else if(bangIT <= 2){
 	      printf("\nNice shootin' pardner! They didn't get much");
 	    }
 	    else{
@@ -547,9 +543,9 @@
 	    printf("Helpful Indians Show you where to find more food\n");
 	    food = food + 14;
 	  }
-	  return;
-	    
-	}
+	  return 0;
+	  }  
+	} 
 	
 	int mountains(){ // 4700 -  5040
 		
