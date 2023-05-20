@@ -436,8 +436,15 @@
 	
 	int selectEvents(){ // 3540 - 4690
 	  eventcnt = 0;
-	  rng = rand() % 101; // Generate Num <100
-	  eventcnt = eventcnt + 1;
+	  do{
+		  rng = rand() % 101; // Generate Num <100
+		  eventcnt = eventcnt + 1;
+		  if(eventcnt == 16){
+			printf("Helpful Indians Show you where to find more food\n");
+			food = food + 14;
+			return 0;
+		  }
+	  }while(rng > 95);
 	  if(rng <= 6){ // Basic Line 3660
 	    printf("\nWagon breaks down! Lose time and supplies fixing it");
 	    miles = miles - 15.0 - 5.0 * ((double)rand() / RAND_MAX); 
@@ -466,7 +473,24 @@
 	    miles = miles - 10.0 * ((double)rand() / RAND_MAX) - 2.0;
 	  }
 	  else if(rng <= 32){ // Basic Line 3880
-	    /* do this later nerd */
+		if( miles > 950){ // 4490
+			printf("\nCOLD WEATHER---BRRRRRRR!---YOU ");
+			if (cloths > 22+4*((double)rand() / RAND_MAX)){
+				printf("HAVE ENOUGH CLOTHING TO KEEP YOU WARM");
+			}else{
+				printf("DON'T HAVE ENOUGH CLOTHING TO KEEP YOU WARM");
+				cold =1;
+			}
+			if(cold = 1){
+				illness();
+			}
+		}else{
+			printf("\nHEAVY RAINS---TIME AND SUPPLIES LOST");
+			food -= 10;
+			ammo-=500;
+			misc-=15;
+			miles = miles - 10 * ((double)rand() / RAND_MAX) - 5.0;
+		}
 	  }
 	  else if(rng <= 35){ // Basic Line 3960
 	    printf("\nBandits Attack!");
@@ -532,20 +556,30 @@
 	  }
 	  else if(rng <= 69){ // Basic Line 4560
 	    printf("\nHail storm! Supplies damaged!");
-	    miles = miles - 5.0 - ((double)rand() / RAND_MAX);
+	    miles = miles - 5.0 - ((double)rand() / RAND_MAX) *10;
 	    ammo = ammo - 200;
 	    misc = misc - 4.0 - ((double)rand() / RAND_MAX) * 3;
 	  }
 	  else if(rng <= 95){ // Basic Line 4610
 	    if(eat == 1){
-	  }
-	  while(eventcnt == 16){
-	    printf("Helpful Indians Show you where to find more food\n");
+			illness();
+		}else if (eat == 3){
+			if(((double)rand() / RAND_MAX) >.25){
+				illness();
+			}
+		}else{
+			if(((double)rand() / RAND_MAX) < .5){
+				illness();
+			}
+		}
+	  }else{
+		printf("Helpful Indians Show you where to find more food\n");
 	    food = food + 14;
 	  }
+
 	  return 0;
-	  }  
-	} 
+	    
+	}
 	
 	int mountains(){ // 4700 -  5040
 		
